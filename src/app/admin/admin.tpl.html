@@ -1,0 +1,37 @@
+<table tr-ng-grid="" items="vm.todos" sync="todos" remote="todos" docs="items" type="todo">
+
+    <tr>
+        <td>
+            <button class="btn btn-default" ng-click="vm.edit(gridItem)">
+                Edit
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-danger" ng-click="vm.remove(gridItem)">
+                Delete
+            </button>
+        </td>
+    </tr>
+
+</table>
+
+<button type="button" class="btn btn-default" ng-click="vm.newTodo()">New todo</button>
+
+<button type="button" class="btn btn-default" ng-click="vm.toast()">Toast</button>
+
+<script type="text/ng-template" id="todoModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit todo</h3>
+    </div>
+    <div class="modal-body">
+        <form form-for="edit" validation-rules="validationRules" submit-with="submit(data)">
+            <text-field attribute="title" label="Title"></text-field>
+            <text-field attribute="description" label="Description" multiline="4"></text-field>
+            <checkbox-field attribute="ok" label="Done"></checkbox-field>
+            <submit-button label="Save"></submit-button>
+            <button class="btn btn-warning" ng-click="cancel()">
+                Cancel
+            </button>
+        </form>
+    </div>
+</script>

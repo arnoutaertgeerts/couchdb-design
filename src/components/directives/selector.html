@@ -1,0 +1,82 @@
+<div class="col-lg-3">
+    <div class="list-group">
+        <a ng-repeat='doc in docs'
+           href="#"
+           class="list-group-item"
+           ng-click="pickDoc(doc)"
+           ng-class="{active: $index == nav.index}"
+                >
+            {{ doc._id }}
+        </a>
+    </div>
+</div>
+<div class="col-lg-3" ng-if="showFunctions">
+    <div class="btn btn-default"
+         ng-click="save(docs[nav.index])"
+            >
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>  Save {{ docs[nav.index]._id }}</div>
+
+    <div class="spacer20"></div>
+
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-warning"><h4 class="list-group-item-heading">Filters</h4></a>
+
+        <a ng-repeat='(key, value) in doc.filters'
+           href="#"
+           class="list-group-item"
+           ng-click="pickFunction('filters', key)"
+           ng-class="{active: value == docs[nav.index][nav.type][nav.name]}"
+                >
+            {{ key }}
+
+        </a>
+        <a href="#" class="list-group-item"><strong>New filter</strong></a>
+    </div>
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-warning"><h4 class="list-group-item-heading">Views</h4></a>
+        <a ng-repeat='(key, value) in doc.views'
+           href="#"
+           class="list-group-item"
+           ng-click="pickFunction('views', key)"
+           ng-class="{active: value == docs[nav.index][nav.type][nav.name]}"
+                >
+            {{ key }}
+        </a>
+        <a href="#" class="list-group-item"><strong>New view</strong></a>
+
+    </div>
+</div>
+
+<div class="col-lg-6" ng-if="showEditor>0">
+
+    <div ng-if="nav.type === 'filters'">
+        <section class="editor">
+            <div ui-ace="{
+                    useWrapMode : true,
+                    mode: 'javascript'
+                }" ng-model="docs[nav.index][nav.type][nav.name]"></div>
+        </section>
+    </div>
+
+    <div ng-if="nav.type === 'views'">
+        <h3>Map function</h3>
+
+        <section class="editor">
+            <div ui-ace="{
+                    useWrapMode : true,
+                    mode: 'javascript'
+                }" ng-model="docs[nav.index][nav.type][nav.name].map"></div>
+        </section>
+
+        <h3>Reduce function</h3>
+
+        <section class="editor">
+            <div ui-ace="{
+                    useWrapMode : true,
+                    mode: 'javascript'
+                }" ng-model="docs[nav.index][nav.type][nav.name].reduce"></div>
+        </section>
+
+
+    </div>
+</div>
