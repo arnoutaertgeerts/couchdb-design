@@ -14,7 +14,8 @@
     <div class="btn btn-default"
          ng-click="save(docs[nav.index])"
             >
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>  Save {{ docs[nav.index]._id }}</div>
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save {{ docs[nav.index]._id }}
+    </div>
 
     <div class="spacer20"></div>
 
@@ -30,7 +31,16 @@
             {{ key }}
 
         </a>
-        <a href="#" class="list-group-item"><strong>New filter</strong></a>
+
+        <a href="#" class="list-group-item">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="New Filter">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Create</button>
+                </span>
+            </div>
+        </a>
+
     </div>
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-warning"><h4 class="list-group-item-heading">Views</h4></a>
@@ -42,7 +52,14 @@
                 >
             {{ key }}
         </a>
-        <a href="#" class="list-group-item"><strong>New view</strong></a>
+        <a href="#" class="list-group-item">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="New View">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Create</button>
+                </span>
+            </div>
+        </a>
 
     </div>
 </div>
