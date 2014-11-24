@@ -29,10 +29,11 @@
             scope.size = size;
             scope.doc = {};
 
+            //Initial navigation of the director
             scope.nav = {
-                index: 0,
+                index: '@',
                 type: '',
-                name: ''
+                name: '@'
             };
 
             scope.data = {
