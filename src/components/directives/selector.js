@@ -12,13 +12,14 @@
             templateUrl: 'components/directives/selector.html',
             restrict: 'E',
             scope: {
-                docs: '=docs'
+                docs: '=docs',
             }
         };
 
         return directive;
 
         function link(scope, element, attrs) {
+
             scope.showFunctions = false;
             scope.showEditor = false;
 
@@ -29,9 +30,11 @@
             scope.changeName = changeName;
             scope.save = save;
             scope.remove = remove;
+            scope.changed = changed;
 
             scope.size = size;
             scope.doc = {};
+            scope.savedDocs = [];
 
             //Initial navigation of the director (set to @ to prevent initial matches)
             scope.nav = {
@@ -44,6 +47,17 @@
                 name: ''
             };
 
+            var stopWatch = scope.$watch('docs', function() {
+
+                if(scope.docs !== undefined) {
+                    angular.copy(scope.docs, scope.savedDocs);
+
+                    stopWatch();
+                }
+
+            }, true);
+
+
             function pickDoc(doc) {
                 scope.showFunctions = true;
                 scope.showEditor = false;
@@ -53,13 +67,15 @@
             }
 
             function changeName(name) {
-                var newFunction = scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
+                if (name !== scope.nav.name) {
+                    var newFunction = scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
 
-                scope.docs[scope.nav.index][scope.nav.type][name] = newFunction;
-                scope.docs[scope.nav.index][scope.nav.type][scope.nav.name] = undefined;
-                delete scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
+                    scope.docs[scope.nav.index][scope.nav.type][name] = newFunction;
+                    scope.docs[scope.nav.index][scope.nav.type][scope.nav.name] = undefined;
+                    delete scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
 
-                scope.nav.name = name;
+                    scope.nav.name = name;
+                }
             }
 
             function pickFunction(type, value) {
@@ -104,6 +120,7 @@
 
             function save(doc) {
                 doc.$save();
+                scope.savedDocs[scope.nav.index] = scope.docs[scope.nav.index];
             }
 
             function remove() {
@@ -113,6 +130,11 @@
                 scope.nav.name = '@';
 
                 pickDoc(scope.docs[scope.nav.index]);
+            }
+
+            function changed() {
+                var test = scope.savedDocs == scope.docs;
+                return angular.equals(angular.toJson(scope.savedDocs[scope.nav.index]), angular.toJson(scope.docs[scope.nav.index]));
             }
         }
     }
