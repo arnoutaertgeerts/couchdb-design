@@ -24,6 +24,7 @@
             scope.pickDoc = pickDoc;
             scope.pickFunction = pickFunction;
             scope.addFunction = addFunction;
+            scope.changeName = changeName;
             scope.save = save;
             scope.size = size;
             scope.doc = {};
@@ -31,6 +32,10 @@
             scope.nav = {
                 index: 0,
                 type: '',
+                name: ''
+            };
+
+            scope.data = {
                 name: ''
             };
 
@@ -42,7 +47,7 @@
                 scope.nav.index = scope.docs.indexOf(doc);
             }
 
-            function changeName(name, nav, key) {
+            function changeName(name) {
                 var newFunction = scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
 
                 scope.docs[scope.nav.index][scope.nav.type][name] = newFunction;
@@ -54,6 +59,8 @@
 
                 scope.nav.type = type;
                 scope.nav.name = value;
+                scope.data.name = value;
+
             }
 
             function addFunction(type, name) {
@@ -70,7 +77,7 @@
                 }
 
                 //Add the property if it does not exist already
-                if(!scope.docs[nav.index].hasOwnProperty(type)){
+                if(!scope.docs[scope.nav.index].hasOwnProperty(type)){
                     scope.docs[scope.nav.index][type] = {};
                 }
 

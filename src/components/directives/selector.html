@@ -51,6 +51,7 @@
            ng-class="{active: value == docs[nav.index][nav.type][nav.name]}"
                 >
             {{ key }}
+
         </a>
         <a href="#" class="list-group-item">
             <div class="input-group">
@@ -65,8 +66,15 @@
 </div>
 
 <div class="col-lg-6" ng-if="showEditor>0">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="{{ nav.name }}" ng-model="data.name">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="changeName(data.name)">Update</button>
+        </span>
+    </div>
 
     <div ng-if="nav.type === 'filters'">
+        <div class="spacer20"></div>
         <section class="editor">
             <div ui-ace="{
                     useWrapMode : true,
