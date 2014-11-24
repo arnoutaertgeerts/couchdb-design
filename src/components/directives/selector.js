@@ -52,6 +52,9 @@
 
                 scope.docs[scope.nav.index][scope.nav.type][name] = newFunction;
                 scope.docs[scope.nav.index][scope.nav.type][scope.nav.name] = undefined;
+                delete scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
+
+                scope.nav.name = name;
             }
 
             function pickFunction(type, value) {
