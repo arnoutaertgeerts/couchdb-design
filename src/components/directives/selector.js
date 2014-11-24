@@ -29,7 +29,7 @@
             scope.size = size;
             scope.doc = {};
 
-            //Initial navigation of the director
+            //Initial navigation of the director (set to @ to prevent initial matches)
             scope.nav = {
                 index: '@',
                 type: '',
