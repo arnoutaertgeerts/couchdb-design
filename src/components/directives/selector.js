@@ -43,7 +43,10 @@
             }
 
             function changeName(name, nav, key) {
+                var newFunction = scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
 
+                scope.docs[scope.nav.index][scope.nav.type][name] = newFunction;
+                scope.docs[scope.nav.index][scope.nav.type][scope.nav.name] = undefined;
             }
 
             function pickFunction(type, value) {
@@ -56,6 +59,7 @@
             function addFunction(type, name) {
                 var newFunction = {};
 
+                //Check which type of function we need to add
                 if (type == 'views') {
                     newFunction[name] = {
                                 'map': '',
@@ -65,6 +69,12 @@
                     newFunction[name] = '';
                 }
 
+                //Add the property if it does not exist already
+                if(!scope.docs[nav.index].hasOwnProperty(type)){
+                    scope.docs[scope.nav.index][type] = {};
+                }
+
+                //Add the function to the right design document
                 angular.extend(scope.docs[scope.nav.index][type], newFunction);
 
             }
