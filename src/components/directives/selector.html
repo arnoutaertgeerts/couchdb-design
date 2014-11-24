@@ -26,7 +26,7 @@
            href="#"
            class="list-group-item"
            ng-click="pickFunction('filters', key)"
-           ng-class="{active: value == docs[nav.index][nav.type][nav.name]}"
+           ng-class="{active: value == docs[nav.index][nav.type][nav.name] && nav.name == key}"
                 >
             {{ key }}
 
