@@ -21,11 +21,15 @@
         function link(scope, element, attrs) {
             scope.showFunctions = false;
             scope.showEditor = false;
+
             scope.pickDoc = pickDoc;
             scope.pickFunction = pickFunction;
+
             scope.addFunction = addFunction;
             scope.changeName = changeName;
             scope.save = save;
+            scope.remove = remove;
+
             scope.size = size;
             scope.doc = {};
 
@@ -100,6 +104,15 @@
 
             function save(doc) {
                 doc.$save();
+            }
+
+            function remove() {
+                scope.docs[scope.nav.index][scope.nav.type][scope.nav.name] = undefined;
+                delete scope.docs[scope.nav.index][scope.nav.type][scope.nav.name];
+
+                scope.nav.name = '@';
+
+                pickDoc(scope.docs[scope.nav.index]);
             }
         }
     }
