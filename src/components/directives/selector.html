@@ -34,9 +34,9 @@
 
         <a href="#" class="list-group-item">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="New Filter">
+                <input type="text" class="form-control" placeholder="New Filter" ng-model='newFilter'>
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Create</button>
+                    <button class="btn btn-default" type="button" ng-click="addFunction('filters', newFilter)">Create</button>
                 </span>
             </div>
         </a>
@@ -54,9 +54,9 @@
         </a>
         <a href="#" class="list-group-item">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="New View">
+                <input type="text" class="form-control" placeholder="New View" ng-model='newView'>
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Create</button>
+                    <button class="btn btn-default" type="button" ng-click="addFunction('views', newView)">Create</button>
                 </span>
             </div>
         </a>

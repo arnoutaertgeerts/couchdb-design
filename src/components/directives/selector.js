@@ -23,6 +23,7 @@
             scope.showEditor = false;
             scope.pickDoc = pickDoc;
             scope.pickFunction = pickFunction;
+            scope.addFunction = addFunction;
             scope.save = save;
             scope.size = size;
             scope.doc = {};
@@ -50,6 +51,22 @@
 
                 scope.nav.type = type;
                 scope.nav.name = value;
+            }
+
+            function addFunction(type, name) {
+                var newFunction = {};
+
+                if (type == 'views') {
+                    newFunction[name] = {
+                                'map': '',
+                                'reduce': ''
+                    };
+                } else {
+                    newFunction[name] = '';
+                }
+
+                angular.extend(scope.docs[scope.nav.index][type], newFunction);
+
             }
 
             function size (obj) {
