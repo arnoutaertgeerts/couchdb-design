@@ -48,13 +48,13 @@
                 var deferred = $q.defer();
 
                 if (!model._id) {
-                    return db.post(model).then(function(res) {
+                    db.post(model).then(function(res) {
                         model._rev = res.rev;
-                        $rootScope.$emit('model:create');
                         deferred.resolve(model);
+                        $rootScope.$emit('model:create');
                     })
                 } else {
-                    return db.put(model).then(function(res) {
+                    db.put(model).then(function(res) {
                         model._rev = res.rev;
                         deferred.resolve(model);
                         $rootScope.$emit('model:update');
