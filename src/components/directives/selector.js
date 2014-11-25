@@ -30,7 +30,6 @@
             scope.changeName = changeName;
             scope.save = save;
             scope.remove = remove;
-            scope.changed = changed;
 
             scope.size = size;
             scope.doc = {};
@@ -43,16 +42,32 @@
                 name: '@'
             };
 
+            //Check if a document has changed
+            var saved = [];
+            scope.changes = [];
+
             scope.data = {
                 name: ''
             };
 
-            var stopWatch = scope.$watch('docs', function() {
-
-                if(scope.docs !== undefined) {
-                    angular.copy(scope.docs, scope.savedDocs);
-
+            var stopWatch = scope.$watch('docs', function(newDocs, oldDocs) {
+                if(newDocs !== undefined) {
+                    angular.copy(newDocs, saved);
                     stopWatch();
+                }
+            });
+
+            scope.$watch('docs', function(newDocs, oldDocs) {
+                if(newDocs !== undefined && oldDocs !== undefined) {
+                    var changes = [];
+                    newDocs.forEach(function(doc, i) {
+
+                        //Don't check the rev values
+                        saved[i]._rev = newDocs[i]._rev
+                        changes.push(!angular.equals(newDocs[i], saved[i]));
+                    });
+
+                    scope.changes = changes;
                 }
 
             }, true);
@@ -119,8 +134,11 @@
             }
 
             function save(doc) {
-                doc.$save();
-                scope.savedDocs[scope.nav.index] = scope.docs[scope.nav.index];
+                var promise = doc.$save();
+                promise.then(function(res) {
+                    console.log(res);
+                });
+                angular.copy(scope.docs[scope.nav.index], saved[scope.nav.index]);
             }
 
             function remove() {
@@ -130,11 +148,6 @@
                 scope.nav.name = '@';
 
                 pickDoc(scope.docs[scope.nav.index]);
-            }
-
-            function changed() {
-                var test = scope.savedDocs == scope.docs;
-                return angular.equals(angular.toJson(scope.savedDocs[scope.nav.index]), angular.toJson(scope.docs[scope.nav.index]));
             }
         }
     }

@@ -9,16 +9,15 @@
             {{ doc._id }}
         </a>
     </div>
+
 </div>
 <div class="col-lg-3" ng-if="showFunctions">
-    <div class="btn btn-default"
-         ng-class=""
+    <div class="btn btn-success"
+         ng-class="{disabled: !changes[nav.index]}"
          ng-click="save(docs[nav.index])"
             >
         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save {{ docs[nav.index]._id }}
     </div>
-
-    {{ changed() }}
 
     <div class="spacer20"></div>
 

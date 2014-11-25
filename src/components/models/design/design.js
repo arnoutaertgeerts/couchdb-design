@@ -6,10 +6,11 @@
         .factory('DesignDocs', DesignDocsFactory);
 
     DesignDocsFactory.$inject = [
+        '$q',
         'COUCH'
     ];
 
-    function DesignDocsFactory(COUCH) {
+    function DesignDocsFactory($q, COUCH) {
         function factory() {
             var db = PouchDB(COUCH);
 
@@ -43,20 +44,24 @@
 
             function save() {
                 var model = this;
+
+                var deferred = $q.defer();
+
                 if (!model._id) {
                     return db.post(model).then(function(res) {
                         model._rev = res.rev;
                         $rootScope.$emit('model:create');
-
+                        deferred.resolve(model);
                     })
                 } else {
                     return db.put(model).then(function(res) {
                         model._rev = res.rev;
-
+                        deferred.resolve(model);
                         $rootScope.$emit('model:update');
-
                     })
                 }
+
+                return deferred.promise;
             }
 
             function remove() {
